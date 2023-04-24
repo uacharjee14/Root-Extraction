@@ -1,11 +1,11 @@
-G = AdditiveAbelianGroup([16,16,16,64,64,64])#The Group description here, only abelian p groups
+G = AdditiveAbelianGroup([16,16,16,64,64,64])#Update The Group description here, only abelian p groups
 B = G.gens()#The basis is e_1,e_2,...,e_N
 Q = list(B)
-p=2 #the prime p
+p=2 #update the prime p here
 e = [int(math.log(q.order(),p)) for q in Q]
-QQ = [1,2,4,2,8,16]#the q coefficients
+QQ = [1,2,4,2,8,16]# update the element with respect to standard basis here
 K = sum([QQ[i]*Q[i] for i in range(len(QQ))])
-M = [2,1,4,8,16,2]#the m's
+M = [2,1,4,8,16,2]#update coefficients (the m's) here.
 M2 = list(M)
 
 I_M = set(range(len(Q)))
