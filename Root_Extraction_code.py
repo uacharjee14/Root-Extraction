@@ -1,17 +1,17 @@
-G = AdditiveAbelianGroup([16,16,16,64,64,64])#Update The Group description here, only abelian p groups
+G = AdditiveAbelianGroup([16,16,16,64,64,64])#The Structure of the group -supposed to be computed by Sutherland's structure computation algorithm
 B = G.gens()#The basis is e_1,e_2,...,e_N
 Q = list(B)
-p=2 #update the prime p here
+p=2 #Update the prime p here
 e = [int(math.log(q.order(),p)) for q in Q]
-QQ = [1,2,4,2,8,16]# update the element with respect to standard basis here
+QQ = [1,2,4,2,8,16]# update the element with respect to standard basis here- supposed to be computed by Sutherland's generalized discrete logarithm algorithm
 K = sum([QQ[i]*Q[i] for i in range(len(QQ))])
-M = [2,1,4,8,16,2]#update coefficients (the m's) here.
+M = [2,1,4,8,16,2]#update coefficients (the m's) here - provided as an input to the root extraction problem
 M2 = list(M)
 
 I_M = set(range(len(Q)))
 I_Q = set(range(len(Q)))
 
-def shuffle():
+def shuffle():#To shuffle the basis if required so that m_k^{-1} is ensured to exist
     M1=list(M)
     Q1 = list(QQ)
     a=1
@@ -41,7 +41,7 @@ def shuffle():
         #print(QQ)
     K = sum([QQ[i]*Q[i] for i in range(len(QQ))])
     return Q
-def Reduce(K):
+def Reduce(K):#To reduce the problem (if required) in every iteration
     while True:
         if all(M[i]%p==0 for i in I_M):
             for i in I_M:
@@ -55,7 +55,7 @@ def Reduce(K):
     K= sum([QQ[i]*Q[i] for i in I_Q])
     return K
 
-def check(K,M):
+def check(K,M):#To Check if the necessary and sufficient conditions are satisfied
     if K.order()== 1 or all(a == 0 for a in M) :
         if all(a == 0 for a in M) and K.order()==1 :
             print(Q)
@@ -71,7 +71,7 @@ def check(K,M):
         print("No solution exists")
         return 1
     
-def rho(l,S):
+def rho(l,S):#this is the p-valuation function intially named rho
     r = 0
     S = [(l*S[i])%Q[i].order() for i in range(len(S))]
     while True:
@@ -82,7 +82,7 @@ def rho(l,S):
             break
     return r
 
-def solve(K):
+def solve(K):#The function to extract roots
     while true:
         K = Reduce(K)
         k = 0
@@ -120,7 +120,7 @@ def solve(K):
             
                         
 
-def inv(m,j):
+def inv(m,j):#this calls the code for extended euclidean algorithm that computes inverses
     q1 = m
     q2 = p**e[j]
     g,x,y = gcdExtended(q1,q2)
